@@ -27,3 +27,6 @@ mongo
 mysql
 redis
 rocketmq
+.env
+*.key
+*.pem

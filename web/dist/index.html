@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    .bodyContainer {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .container {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+      background-color: #131c23;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .containerShow {
+      display: flex;
+    }
+
+    .progress {
+      position: relative;
+      background-color: #e5e9eb;
+      height: 6px;
+      width: 200px;
+      border-radius: 3px;
+    }
+
+    .disappear {
+      animation-duration: .5s;
+      animation-name: disappear;
+      opacity: 0;
+    }
+
+    @keyframes disappear {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .progress-bar {
+      position: absolute;
+      animation-duration: 10s;
+      animation-name: progressFrame;
+      background-image: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
+      animation-timing-function: cubic-bezier(0, 1, 0.5, 1);
+      background-size: 200px 6px;
+      height: 100%;
+      width: 100%;
+      border-radius: 3px;
+    }
+
+    @keyframes progressFrame {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    .progress-bar2 {
+      position: absolute;
+      animation-duration: .5s;
+      animation-name: progressFrame2;
+      background-image: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
+      background-size: 200px 6px;
+      height: 100%;
+      width: 100%;
+      border-radius: 3px;
+    }
+
+    @keyframes progressFrame2 {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+  </style>
+  <script type="text/javascript">
+    var timeoutid = setTimeout(function() {
+      document.getElementById('progressContainer').className = document.getElementById('progressContainer').className + ' containerShow'
+    }, 200)
+    //  完成进度条的调用代码
+    finishProgressBar = function() {
+      clearTimeout(timeoutid)
+      // 先让进度条快速到100%
+      document.getElementById('progressBar').className = 'progress-bar2'
+      setTimeout(function() {
+        // 让进度条消失
+        document.getElementById('progressContainer').className = document.getElementById('progressContainer').className + ' disappear'
+        document.body.className = ''
+        setTimeout(function() {
+          // 删除container
+          document.body.removeChild(document.getElementById('progressContainer'))
+        }, 500)
+      }, 500)
+    }
+  </script>
+  <base href="/">
+<link href="/index.760de7b4.css" rel="stylesheet"></head>
+
+<body class="bodyContainer">
+
+  <div id="progressContainer" class="container">
+    <div class="progress">
+      <div class="progress-bar">
+      </div>
+      <div id="progressBar" class="">
+      </div>
+    </div>
+  </div>
+
+  <div id="root"></div>
+
+<script type="text/javascript" src="/emoji.d8f85da9.js"></script><script type="text/javascript" src="/antd.c2e955a7.js"></script><script type="text/javascript" src="/vendor.df570ef0.js"></script><script type="text/javascript" src="/index.826ea65e.js"></script></body>
+
+</html>

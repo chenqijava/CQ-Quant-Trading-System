@@ -1,0 +1,156 @@
+.body {
+  height: 100%;
+}
+
+.header {
+  /*width: 1438px;*/
+  height: 48px;
+  background: #55B4FD;
+  background-image: url('images/slices/Title.png');
+  background-size: 100% 100%;
+  padding: 0 48px 0 0;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  margin: 9px 7px 9px 12px;
+  background: #60A9FE;
+  border-radius: 6px;
+  float: left;
+  background-image: url('images/slices/Logo-white@2x.png');
+  background-size: 30px 30px;
+}
+
+.logo2 {
+  width: 60px;
+  height: 60px;
+  margin: 10px 0 0 50px;
+  background-image: url('images/img1/logo.png');
+  background-size: 100% 100%;
+}
+
+.title {
+  height: 22px;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 22px;
+  margin: 12px 0 14px 0;
+  float: left;
+}
+
+.locale {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.header .menu {
+  /*width: 65px;*/
+  height: 48px;
+  top: 0;
+  border-style: none;
+  background: #55B4FD;
+  float: right;
+}
+
+.header .menu:hover {
+  /*width: 65px;*/
+  height: 48px;
+  top: 0;
+  border-style: none;
+  background: #0F86D7;
+  float: right;
+}
+
+.header .menu .icon {
+  width: 16px;
+  height: 16px;
+  color: #FFFFFF;
+}
+
+.header .menu .title1 {
+  width: 65px;
+  height: 20px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 20px;
+}
+
+.left_menu {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-color: rgba(0, 0, 0, .2) hsla(0, 0%, 100%, .1);
+  scrollbar-width: thin;
+  height: 100%;
+  border-right: 0;
+  background: #fff no-repeat;
+  background-position: right bottom;
+  background-size: 90px 93px;
+}
+
+body .content {
+  background: #fff;
+  padding: 24px;
+  min-height: auto;
+}
+
+.version {
+  color: #55B4FD;
+  float: right;
+}
+
+.version div {
+  line-height: 20px
+}
+
+.changeProfile {
+  width: 72%;
+}
+
+.changeProfile .row {
+  margin: 14px 0 14px 0;
+}
+
+.changeProfile .redPoint {
+  color: red;
+  text-align: right;
+  margin: 9px 0 0 0;
+}
+
+.changeProfile p {
+  margin: 9px 0 0 0;
+}
+
+:global(.loginUsername) {
+  border-radius: 3px;
+  border: 1px solid #DCDCDC;
+  background: #FFF;
+  display: flex;
+}
+:global(.loginUsername input) {
+  flex: 1;
+  border: none;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.9);
+  outline: none;
+} 
+
+:global(.loginUsername:has(input:focus)) {
+  border: 1px solid #3978F7;
+  box-shadow: 0 0 0 2px #d9e1ff;
+}
+
+:global(.loginUsername:has(input:active)) {
+  border: 1px solid #3978F7;
+  box-shadow: 0 0 0 2px #d9e1ff;
+}
+
+:global(.loginUsername:has(input:hover)) {
+  border: 1px solid #3978F7;
+  box-shadow: 0 0 0 2px #d9e1ff;
+}

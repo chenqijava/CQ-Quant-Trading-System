@@ -1,0 +1,112 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx:stable
+    container_name: nginx_server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./web/dist:/usr/share/nginx/html
+      - ./logs:/var/log/nginx
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - app_net
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo/data:/data/db
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - app_net
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: appdb   # 可选：创建默认数据库
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/mysql_data:/var/lib/mysql
+    networks:
+      - app_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/redis_data:/data
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - app_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  namesrv:
+    image: apache/rocketmq:5.1.4
+    container_name: rmqnamesrv
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - app_net
+
+  broker:
+    image: apache/rocketmq:5.1.4
+    container_name: rmqbroker
+    depends_on:
+      - namesrv
+    ports:
+      - "10911:10911"
+      - "10909:10909"
+    volumes:
+      - ./rocketmq/broker.conf:/opt/rocketmq/conf/broker.conf
+      # 可选持久化目录
+      - ./rocketmq/store:/opt/rocketmq/store
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge

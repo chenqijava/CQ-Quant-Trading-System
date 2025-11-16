@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    // 获取url参数
+    // 获取 URL 查询字符串
+    const queryString = window.location.search;
+
+    // 使用 URLSearchParams 解析查询字符串
+    const urlParams = new URLSearchParams(queryString);
+
+    // 获取特定的参数
+    const paramValue = urlParams.get('url');
+
+    window.location.href = decodeURIComponent(paramValue)
+</script>
+<body>
+
+</body>
+</html>

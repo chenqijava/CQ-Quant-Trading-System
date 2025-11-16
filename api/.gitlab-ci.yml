@@ -1,0 +1,88 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+      when: always
+    - when: never
+
+variables:
+  PROJECT_NAME: gmail-cloud
+  GRADLE_IMAGE: gradle:8-jdk21
+  DOCKER_IMAGE: docker:20.10.16
+  FULL_SYS_IMAGENAME: $REGISTRY_URL/$REGISTRY_NAMESPACE/$REGISTRY_IMAGENAME
+
+stages:
+  - build-jar
+  - build-image
+  - publish-image
+  - deploy
+
+trigger-build-web:
+  stage: build-jar
+  trigger:
+    project: email/gmail-admin
+    branch: $CI_COMMIT_TAG
+    #等待执行完成
+    strategy: depend
+
+build-jar:
+  stage: build-jar
+  image: $GRADLE_IMAGE
+  script: gradle --build-cache assemble
+  cache:
+    key:
+      files:
+        - gradle/wrapper/gradle-wrapper.properties
+    paths:
+      - .gradle/caches/
+      - .gradle/notifications/
+      - .gradle/wrapper/
+    policy: pull-push
+  artifacts:
+    paths:
+      - build/libs/${PROJECT_NAME}-*.jar
+    exclude:
+      - build/libs/*-plain.jar
+    expire_in: 1 week
+
+build-image:
+  stage: build-image
+  image: $DOCKER_IMAGE
+  script:
+    - echo "building docker image.."
+    - docker build -t $FULL_SYS_IMAGENAME:$CI_COMMIT_TAG .
+  dependencies:
+    - build-jar
+
+publish-image:
+  stage: publish-image
+  image: $DOCKER_IMAGE
+  script:
+    - echo "publishing docker image..."
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD $REGISTRY_URL
+    - docker push $FULL_SYS_IMAGENAME:$CI_COMMIT_TAG
+    - docker tag $FULL_SYS_IMAGENAME:$CI_COMMIT_TAG $FULL_SYS_IMAGENAME:latest
+    - docker push $FULL_SYS_IMAGENAME:latest
+    # 删除其它版本镜像,保留本次打包的镜像,方便下次打包时可以重用镜像层
+    - docker images --format "{{.Repository}}:{{.Tag}}" | grep $FULL_SYS_IMAGENAME | grep -v $CI_COMMIT_TAG | xargs -I {} docker rmi {}
+    # - docker rmi $FULL_SYS_IMAGENAME:$CI_COMMIT_TAG
+  dependencies: []
+
+trigger-deploy-test:
+  stage: deploy
+  variables:
+    IMAGE_VERSION: $CI_COMMIT_TAG
+    deploy_host: $PROJECT_NAME-test
+  trigger:
+    project: deploy/deploy
+    branch: $PROJECT_NAME
+  when: manual
+
+trigger-deploy-prod:
+  stage: deploy
+  variables:
+    IMAGE_VERSION: $CI_COMMIT_TAG
+    deploy_host: $PROJECT_NAME-prod
+  trigger:
+    project: deploy/deploy
+    branch: $PROJECT_NAME
+  when: manual

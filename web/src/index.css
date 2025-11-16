@@ -1,0 +1,461 @@
+
+html, body, :global(#root) {
+  height: 100%;
+}
+
+/* 补充 Quill 字体大小样式（与 Quill 生成的类名匹配） */
+:global(.ql-size-small) { font-size: 14px !important; }
+:global(.ql-size-medium) { font-size: 16px !important; }
+:global(.ql-size-large) { font-size: 18px !important; }
+:global(.ql-size-huge) { font-size: 24px !important; }
+/* 确保 Quill 编辑器内容不被 Dialog 字体样式覆盖 */
+:global(.ant-modal .ql-editor) {
+  font-size: inherit !important; /* 继承 Quill 生成的字体大小 */
+  line-height: normal !important; /* 修复行高可能的冲突 */
+}
+/* 添加文字居右样式 */
+:global(.ql-align-right) {
+  text-align: right !important;
+}
+
+/* 文字居左样式 */
+:global(.ql-align-left) {
+  text-align: left !important;
+}
+
+/* 文字居中样式 */
+:global(.ql-align-center) {
+  text-align: center !important;
+}
+
+/* 文字两端对齐样式 */
+:global(.ql-align-justify) {
+  text-align: justify !important;
+}
+
+/* 块引用样式 */
+:global(.ql-blockquote) {
+  border-left: 4px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 16px;
+}
+
+/* 有序列表样式 */
+:global(.ql-list.ql-ordered) {
+  list-style-type: decimal;
+}
+
+/* 无序列表样式 */
+:global(.ql-list.ql-unordered) {
+  list-style-type: disc;
+}
+
+/* 代码块样式 */
+:global(.ql-code-block) {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  white-space: pre-wrap;
+}
+
+/* 删除线样式 */
+:global(.ql-strike) {
+  text-decoration: line-through;
+}
+
+/* 下划线样式 */
+:global(.ql-underline) {
+  text-decoration: underline;
+}
+
+/* 加粗样式 */
+:global(.ql-bold) {
+  font-weight: bold;
+}
+
+/* 斜体样式 */
+:global(.ql-italic) {
+  font-style: italic;
+}
+
+/* 超链接样式 */
+:global(.ql-link) {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* 图片样式 */
+:global(.ql-editor img) {
+  max-width: 100%;
+  height: auto;
+}
+
+/*设置背景图片*/
+/*:global(#root) {*/
+/*  background-image: url("images/slices/login-bg.jpg");*/
+/*  background-size: 100% 50%;*/
+/*  background-repeat: no-repeat;*/
+/*}*/
+
+:global(.logo) {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, .2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
+
+:global(.table-operations) {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+:global(.table-operations) > button, :global(.table-operations) > span, :global(.table-operations) > div, :global(.table-operations) > input {
+  margin-right: 10px;
+}
+
+:global(.globalSpin) {
+  width: 100%;
+  margin: 40px 0 !important;
+}
+
+:global(.video-react) {
+  padding-top: 0 !important;
+}
+
+:global(.msgPlayer .video-react-video) {
+  max-width: 380px; /* 消息框max-width=400 */
+}
+
+:global(.fullTableBottom .ant-table-body .ant-table-fixed) {
+  margin-bottom: 568px;
+}
+
+:global(.fullTableBottom .ant-table-body-inner .ant-table-fixed) {
+  margin-bottom: 568px;
+}
+
+:global(.ant-table-tbody) > :global(tr.mark-row:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)) > td {
+  background: #fff566;
+}
+
+:global(.mark-row) {
+  background: #fffb8f;
+}
+
+:global(.custom-dialog .t-dialog__body){
+  border-bottom: none !important;
+}
+
+hr {
+  border: none;
+  margin: 0px;
+  height: 2px !important;
+  background-color: rgb(240, 242, 245);
+}
+
+:global(.hiddenScroll) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: rgba(0, 0, 0, .2) hsla(0, 0%, 100%, .1);
+  scrollbar-width: thin;
+}
+
+:global(.table-operations:after) {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/*chrome滚动条颜色设置*/
+:global(*::-webkit-scrollbar) {
+  width: 5px;
+  height: 10px;
+  background-color: transparent;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+:global(*::-webkit-scrollbar-track) {
+  background-color: hsla(0, 0%, 100%, .1);
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+:global(*::-webkit-scrollbar-thumb) {
+  background-color: rgba(0, 0, 0, .2);
+  border-radius: 5px;
+}
+
+/*定义滑块 内阴影+圆角*/
+:global(.scrollbarHide::-webkit-scrollbar) {
+  display: none
+}
+
+:global(.scrollbarShow::-webkit-scrollbar) {
+  display: block
+}
+
+:global(.custom-minimap) {
+  background: url(data:image/png;base64,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);
+}
+:global(.table-name) {
+height: 28px;
+text-align: center;
+line-height: 28px;
+background: #f5f5f5;
+font-size: 14px;
+}
+:global(.table-node) {
+width: 100%;
+height: 100%;
+background: #ffffff;
+border-radius: 4px;
+box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+overflow: hidden;
+border: 2px solid;
+}
+:global(.table-node.table-color-0::before) {
+background: #f8cecc;
+}
+:global(.table-node.table-color-1::before) {
+background: #82b366;
+}
+:global(.table-node.table-color-2::before) {
+background: #f8cecc;
+}
+:global(.table-node.table-color-3::before) {
+background: #d79b00;
+}
+:global(.table-node::before) {
+content: "";
+display: block;
+width: 100%;
+height: 8px;
+background: #d79b00;
+}
+
+/* 整个滚动条 */
+::-webkit-scrollbar {
+  width: 5px; /* 滚动条宽度 */
+  height: 5px; /* 水平滚动条高度 */
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3); /* 半透明黑色 */
+  border-radius: 4px; /* 圆角 */
+}
+
+/* 滚动条滑块悬停效果 */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); /* 悬停时颜色加深 */
+}
+
+/* 滚动条滑块激活效果 */
+::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, 0.6); /* 点击时颜色更深 */
+}
+
+/* 滚动条角落（水平和垂直滚动条交汇处） */
+::-webkit-scrollbar-corner {
+  background: transparent; /* 透明背景 */
+}
+
+::selection {
+  background-color: #366EF4 !important; /* 选中文字的背景颜色 */
+  color: white; /* 选中文字的文字颜色 */
+}
+
+:global(body .ant-btn-danger) {
+  color: #3978F7 !important;
+  background-color: #f5f5f5 !important;
+  border-color: #d9d9d9 !important;
+  text-shadow: none!important;
+}
+
+:global(body .ant-btn-danger:hover) {
+  color: #fff !important;
+  background-color: #366EF4 !important;
+  border-color: #366EF4 !important;
+}
+
+:global(.t-dialog--default) {
+  padding: 0 !important;
+}
+
+:global(body .t-dialog__header) {
+  padding: 24px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "PingFang SC";
+  color: rgba(0, 0, 0, 0.90);
+}
+
+:global(body .t-dialog__body) {
+  padding: 24px 32px;
+  border-top: 1px solid #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+}
+
+:global(body .t-dialog__footer) {
+  padding: 24px 32px;
+}
+
+:global(body .t-dialog__footer .t-button--variant-base.t-button--theme-primary) {
+  color: #fff;
+  background-color: #3978F7;
+  border: none;
+}
+
+:global(body .t-dialog__footer .t-button--variant-base.t-button--theme-primary:hover) {
+  color: #fff;
+  background-color: rgba(57, 120, 247, 0.8);
+  border: none;
+}
+
+:global(body .t-dialog__footer .t-button--variant-outline) {
+  background-color: #E7E7E7;
+  border: none;
+  color: rgba(0, 0, 0, 0.90);
+}
+
+:global(body .t-dialog__footer .t-button--variant-outline:hover) {
+  background-color: rgba(231, 231, 231, 0.6);
+  color: rgba(0, 0, 0, 0.60);
+}
+:global(.dialog_item) {
+  display: flex;
+}
+:global(.dialog_item>span) {
+  color: rgba(0, 0, 0, 0.90);
+  margin-right: 16px;
+  line-height: 22px;
+  margin-top: 6px;
+}
+
+:global(.dialog_item span.required_label) {
+  color: #E37318;
+  margin-right: 0px;
+  margin-left: 32px;
+}
+
+:global(.dialog_item_input) {
+  width: 200px;
+}
+
+/*
+* 最后一个dialog_item的margin-bottom为24px
+*/
+:global(.dialog_item:last-of-type) {
+  margin-bottom: 24px;
+}
+
+:global(a.ant-calendar-today-btn:not(.ant-calendar-today-btn-disabled)) {
+  color:#3978F7;
+}
+:global(a.ant-calendar-today-btn:not(.ant-calendar-today-btn-disabled):hover) {
+  color:#7ca8ff;
+}
+:global(a.ant-calendar-time-picker-btn) {
+  color:#3978F7;
+}
+:global(a.ant-calendar-time-picker-btn:hover) {
+  color:#7ca8ff;
+}
+:global(.ant-calendar a.ant-calendar-ok-btn:not(.ant-calendar-ok-btn-disabled)) {
+  background-color: #3978F7;
+  border: none;
+}
+:global(.ant-calendar a.ant-calendar-ok-btn:not(.ant-calendar-ok-btn-disabled):hover) {
+  background-color: #7ca8ff;
+}
+/* :global(.ant-calendar a:hover) {
+  color:#3978F7;
+} */
+:global(.ant-calendar-year-select:hover) {
+  color:#3978F7 !important;
+}
+:global(.ant-calendar-month-select:hover) {
+  color:#3978F7 !important;
+}
+:global(.ant-calendar-day-select:hover) {
+  color:#3978F7 !important;
+}
+:global(.ant-calendar-time-picker-select li:focus) {
+  color:#3978F7 !important;
+}
+:global(.ant-calendar .ant-calendar-today:not(.ant-calendar-disabled-cell) .ant-calendar-date) {
+  color: #3978F7;
+  border-color: #3978F7;
+}
+:global(body a) {
+  color: #3978F7;
+}
+:global(body a:hover) {
+  color: #366EF4;
+}
+
+:global(.mainPage-header) {
+  height: 80px;
+  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.05), 0px 4px 5px 0px rgba(0, 0, 0, 0.08), 0px 2px 4px -1px rgba(0, 0, 0, 0.12);
+  padding: 0px 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  background: #FFF;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+:global(.mainPage-header .header-nav) {
+  color: #000;
+  text-align: center;
+  font-family: "MiSans VF";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 330;
+  line-height: 22px;
+  cursor: pointer;
+  margin-right: 47px;
+}
+:global(.mainPage-content) {
+  padding: 118px 120px 50px;
+  min-height: 800px;
+}
+:global(.mainPage-content .mainPage-search .t-input) {
+  width: 320px;
+  height: 45px;
+  border-radius: 22px;
+  background: #FFF;
+  padding: 0 20px;
+}
+:global(.mainPage-footer) {
+  height: 276px;
+  background-color: #FFF;
+  width: 100%;
+  padding: 0 120px;
+}
+:global(.rechargeInput .t-input) {
+  height: 40px;
+}
+:global(.dot-list) {
+  position: relative;
+  padding-left: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 22px;
+}
+:global(.dot-list::before) {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #555;
+  font-size: 1.2em;
+  line-height: 1;
+}

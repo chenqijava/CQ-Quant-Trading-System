@@ -1,0 +1,38 @@
+spring:
+  profiles:
+    activate:
+      on-profile: docker
+  data:
+    redis:
+      host: redis
+  datasource:
+    url: jdbc:mysql://mysql:3306/gmail_cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+
+admin:
+  password: 'qwertyuiopkjhgf'
+
+rocketmq:
+  name-server: namesrv:9876
+
+redisson:
+  singleServerConfig:
+    address: redis://redis:6379
+
+gateway:
+  emailUrl: http://tornado_nginx:18000/api
+  chatgptBaseUrl: http://newchat2:8000/newchat2
+  tgnetBaseUrl: http://tornado_nginx:18000
+  gmailCookieBaseUrl: http://tornado-web_nginx:18000/api
+  yahooGatewayBaseUrl: http://yahoo-gateway:5000
+
+config:
+  res: /root/project/res
+  resBak: /root/project/resBak
+  uploadDir: /root/project/upload
+
+mongo:
+  db: gmail-cloud
+  host: mongo
+  port: 27017

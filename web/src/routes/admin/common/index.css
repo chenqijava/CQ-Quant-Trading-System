@@ -1,0 +1,72 @@
+.vps h3 {
+  margin: 0 0;
+  height: 36px;
+  /*margin: 0 20px 0px 20px;*/
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "微软雅黑";
+}
+
+.vps h3 .introduce {
+  color: #4DA5E1;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+  font-family: "微软雅黑";
+}
+
+.vps button {
+  margin: 0 10px 0 0;
+  padding: 0;
+  width: 88px;
+  height: 32px;
+  color: white;
+  font-size: 14px;
+}
+
+.vps .buy {
+  background-color: #0F86D7;
+}
+
+/*批量续费的背景颜色*/
+.vps .renew {
+  background-color: #13C87C;
+}
+
+.dialog_buy {
+  font-size: 16px;
+}
+
+.dialog_buy .row {
+  margin: 8px 0 8px 0;
+}
+
+/*购买设备Dialog中文本行标签*/
+.dialog_buy .row .text_left {
+  margin: 0 0;
+  text-align: right;
+}
+
+/*购买设备Dialog中文本行内容*/
+.dialog_buy .row .text_right {
+  margin: 0 0;
+  text-align: left;
+  font-weight: 600;
+  font-family: "PingFang SC";
+}
+
+/*购买设备Dialog中文本行内容(红色)*/
+.dialog_buy .row .text_right_red {
+  colro: red;
+  margin: 0 0;
+  text-align: left;
+  font-weight: 600;
+  font-family: "PingFang SC";
+}
+
+/*购买设备Dialog中输入行标签*/
+.dialog_buy .row .input_left {
+  margin: 5px 0;
+  text-align: right;
+  display: inline-block;
+}

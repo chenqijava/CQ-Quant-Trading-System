@@ -1,0 +1,18 @@
+
+.btn_img {
+  width: 20px;
+  height: 20px;
+  /* margin-top: -36px; */
+}
+.btn_txt {
+  /* margin-top: -15px; */
+  color: #000;
+  margin-left: 10px;
+  display: block;
+  width: 70px;
+  /* float: right; */
+}
+.btn_a {
+  /* display: flex; */
+}
+

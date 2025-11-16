@@ -1,0 +1,68 @@
+{
+  "name": "newdouy_web",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "dependencies": {
+    "@ant-design/plots": "1.2.1",
+    "antd": "~3.24.2",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "dva": "^2.3.1",
+    "dva-loading": "^2.0.3",
+    "emoji-mart": "^2.11.1",
+    "mockjs": "^1.0.1-beta3",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.25",
+    "nprogress": "^0.2.0",
+    "rc-queue-anim": "^1.8.5",
+    "react": "^16.2.0",
+    "react-contextmenu": "^2.11.0",
+    "react-dom": "^16.2.0",
+    "react-helmet": "^6.1.0",
+    "react-qr-code": "^2.0.15",
+    "video-react": "^0.14.1",
+    "decimal.js": "^10.4.3",
+    "quill": "^2.0.3",
+    "react-intl": "^6.4.6",
+    "react-json-view": "^1.21.3",
+    "react-quill": "^2.0.0",
+    "tdesign-react": "^1.11.1"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "babel-plugin-dva-hmr": "^0.3.2",
+    "babel-plugin-import": "^1.6.5",
+    "eslint": "^4.14.0",
+    "eslint-config-umi": "^0.1.1",
+    "eslint-plugin-flowtype": "^2.34.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.14.2",
+    "husky": "^0.12.0",
+    "redbox-react": "^1.4.3",
+    "roadhog": "^2.5.0-beta.4",
+    "webstorm-disable-index": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod",
+    "cstart": "roadhog server",
+    "build": "roadhog build",
+    "analyze": "ANALYZE=1 roadhog build",
+    "analyzewin": "set ANALYZE=1 && roadhog build"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "MIT"
+}
