@@ -26,8 +26,6 @@ import com.nyy.gmail.cloud.repository.mongo.BalanceDetailRepository;
 import com.nyy.gmail.cloud.repository.mongo.RoleRepository;
 import com.nyy.gmail.cloud.repository.mongo.UserRepository;
 import com.nyy.gmail.cloud.service.AccountGroupService;
-import com.nyy.gmail.cloud.service.PlatformPriceService;
-import com.nyy.gmail.cloud.service.UserBalanceDetailService;
 import com.nyy.gmail.cloud.service.UserService;
 import com.nyy.gmail.cloud.utils.ByteUtil;
 import com.nyy.gmail.cloud.utils.MD5Util;
@@ -82,9 +80,6 @@ public class UserController {
     private BalanceDetailRepository balanceDetailRepository;
 
     @Resource
-    private UserBalanceDetailService userBalanceDetailService;
-
-    @Resource
     private MongoPaginationHelper mongoPaginationHelper;
 
     @Resource
@@ -92,9 +87,6 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
-
-    @Autowired
-    private PlatformPriceService platformPriceService;
 
     @RequiredPermission({MenuType.adminUser, MenuType.ownerUser})
     @PostMapping("card/save")
@@ -747,54 +739,5 @@ public class UserController {
         BigDecimal userBalance = userService.getUserBalance(userID);
         return ResponseResult.success(userBalance);
 
-    }
-
-    // 价格调整查询
-    @RequiredPermission({MenuType.adminUser, MenuType.ownerUser})
-    @PostMapping("queryPrice")
-    public Result<List<PlatformPriceRespDto>> queryPrice(@RequestBody IdsListDTO ids) {
-        List<PlatformPriceRespDto> platformPriceRespDtoList = platformPriceService.queryPrice(ids.getId());
-        return ResponseResult.success(platformPriceRespDtoList);
-    }
-
-    // 价格调整保存
-    @RequiredPermission({MenuType.adminUser})
-    @PostMapping("updatePrice")
-    @Check2FA
-    public Result updatePrice(@RequestBody List<PlatformPriceRespDto> data) {
-        String userID = Session.currentSession().userID;
-        platformPriceService.updatePrice(data, userID);
-        return ResponseResult.success();
-    }
-
-    @RequiredPermission(MenuType.ownerUser)
-    @PostMapping("updatePriceCommon")
-    public Result updatePriceCommon(@RequestBody List<PlatformPriceRespDto> data) {
-        String userID = Session.currentSession().userID;
-        platformPriceService.updatePrice(data, userID);
-        return ResponseResult.success();
-    }
-
-    @RequiredPermission({MenuType.adminUser})
-    @PostMapping("openRecharge")
-    @Check2FA
-    public Result openRecharge(@RequestBody IdsListDTO data) {
-        platformPriceService.openRecharge(data.getIds());
-        return ResponseResult.success();
-    }
-
-    @RequiredPermission({MenuType.adminUser})
-    @PostMapping("closeRecharge")
-    @Check2FA
-    public Result closeRecharge(@RequestBody IdsListDTO data) {
-        platformPriceService.closeRecharge(data.getIds());
-        return ResponseResult.success();
-    }
-
-    @RequiredPermission({MenuType.adminUser})
-    @PostMapping("queryRefer")
-    public Result<List<QueryReferRespDto>> queryRefer(@RequestBody IdsListDTO data) {
-        List<QueryReferRespDto> queryReferRespDtos = userService.queryRefer(data.getId());
-        return ResponseResult.success(queryReferRespDtos);
     }
 }

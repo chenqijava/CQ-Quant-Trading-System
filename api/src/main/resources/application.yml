@@ -89,13 +89,6 @@ config:
   uploadDir: ./gmail-cloud/upload
   ipPlatform: http://all_sms.nbt-sms.com
 
-googleDoc:
-  baseUrl: https://docs.google.com/document/d/
-  clientId: 1
-  clientSecret: 1
-  refreshToken: 1
-  testTokenDocId: 1
-
 rocketmq:
   name-server: ${application.middleware.host}:9876
   consumer:
@@ -107,21 +100,6 @@ rocketmq:
 redisson:
   singleServerConfig:
     address: redis://${application.middleware.host}:6379
-
-gateway:
-  baseUrl: https://googleauth.tnt-pub.com/api
-  emailUrl: https://googlegmail.tnt-pub.com/api
-  chatgptBaseUrl: http://localhost:9000/newchat2
-  aiGoogleKey: 1
-  aiChatgpt: 1
-  tgnetBaseUrl: http://127.0.0.1:18001
-  gmailCookieBaseUrl: https://gmail.tnt-pub.com/api
-  yahooGatewayBaseUrl: http://127.0.0.1:5000
-
-payment:
-  url: https://payment.tnt-pub.com/api/open/order/apply
-  apikey: 1
-  secretkey: 1
 
 mongo:
   db: gmail-cloud

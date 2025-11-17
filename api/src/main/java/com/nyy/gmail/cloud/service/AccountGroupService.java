@@ -8,7 +8,6 @@ import com.nyy.gmail.cloud.entity.mongo.Account;
 import com.nyy.gmail.cloud.entity.mongo.AccountGroup;
 import com.nyy.gmail.cloud.enums.AccountGroupTypeEnums;
 import com.nyy.gmail.cloud.enums.AccountOnlineStatus;
-import com.nyy.gmail.cloud.gateway.GatewayClient;
 import com.nyy.gmail.cloud.model.dto.AccountGroupListDTO;
 import com.nyy.gmail.cloud.model.dto.AccountGroupSaveDTO;
 import com.nyy.gmail.cloud.model.dto.GroupAccountStats;
@@ -35,9 +34,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class AccountGroupService {
-
-    @Autowired
-    private GatewayClient gatewayClient;
 
     @Resource
     private AccountGroupRepository accountGroupRepository;

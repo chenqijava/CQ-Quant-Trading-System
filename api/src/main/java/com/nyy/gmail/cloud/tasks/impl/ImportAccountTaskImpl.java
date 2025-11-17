@@ -6,11 +6,9 @@ import com.nyy.gmail.cloud.entity.mongo.Account;
 import com.nyy.gmail.cloud.entity.mongo.GroupTask;
 import com.nyy.gmail.cloud.entity.mongo.SubTask;
 import com.nyy.gmail.cloud.enums.*;
-import com.nyy.gmail.cloud.gateway.GatewayClient;
 import com.nyy.gmail.cloud.repository.mongo.AccountRepository;
 import com.nyy.gmail.cloud.repository.mongo.GroupTaskRepository;
 import com.nyy.gmail.cloud.repository.mongo.SubTaskRepository;
-import com.nyy.gmail.cloud.service.AccountPlatformService;
 import com.nyy.gmail.cloud.tasks.AbstractTask;
 import com.nyy.gmail.cloud.tasks.BaseTask;
 import com.nyy.gmail.cloud.utils.TaskUtil;
@@ -39,12 +37,6 @@ public class ImportAccountTaskImpl extends AbstractTask implements BaseTask {
 
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private AccountPlatformService accountPlatformService;
-
-    @Autowired
-    private GatewayClient gatewayClient;
 
     @Override
     protected SubTaskRepository getSubTaskRepository() {
@@ -432,8 +424,6 @@ public class ImportAccountTaskImpl extends AbstractTask implements BaseTask {
         groupTask.setPublishedCount(groupTask.getTotal());
         groupTaskRepository.save(groupTask);
 
-        accountPlatformService.updateStock(Constants.ADMIN_USER_ID);
-
         return true;
     }
 
@@ -444,9 +434,6 @@ public class ImportAccountTaskImpl extends AbstractTask implements BaseTask {
 
     @Override
     public boolean runTask(SubTask task, Account account) {
-        if (account.getType().equals(AccountTypeEnums.web.getCode())) {
-            gatewayClient.makeSession(account);
-        }
         return false;
     }
 }

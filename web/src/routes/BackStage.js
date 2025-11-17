@@ -23,49 +23,12 @@ import BalanceDetail from './admin/common/BalanceDetail'
 import Payment from './admin/common/payment'
 import UserVps from './admin/common/vps'
 import UserAccount from './admin/common/account'
-import StrangerSendMsg from './admin/common/strangerSendMsg'
 import UserAccountGroup from './admin/common/accountGroup'
 import roleList from './admin/common/role/list'
 import ApiKeyList from './admin/common/apiKey/list'
 import proxyAccountList from './admin/common/proxyAccount/list'
-import PlatformList from './admin/common/platform/list'
-import googleStudioList from './admin/common/googleStudio/list'
-import chatgptList from './admin/common/googleStudio/listChatgpt.js'
-import TaskList from './admin/common/task/list'
-import Receive from './admin/common/receiveEmail.js'
-import aiModelList from './admin/common/aiModel/list'
 
 import UserInfo from './admin/common/userCenter/userInfo.js'
-import MyOrder from './admin/common/userCenter/myOrder.js'
-import MyOrderV2 from './admin/common/userCenter/myOrderV2.js'
-import MyEmail from './admin/common/userCenter/myEmail.js'
-import MyBill from './admin/common/userCenter/myBill.js'
-import Recharge from './admin/common/userCenter/recharge.js'
-import ownerUser from './admin/common/userCenter/ownerUser.js'
-import batchSendEmail from './admin/common/userCenter/batchSendEmail.js'
-import batchSendEmailAdd from './admin/common/userCenter/batchSendEmailAdd.js'
-import linkCheck from './admin/common/userCenter/linkCheck.js'
-import contentAIGen from './admin/common/userCenter/contentAiGen.js'
-import tgnetToSession from './admin/common/userCenter/tgnetToSession.js'
-import systemMailTemplate from './admin/common/userCenter/adminSystemMailTemplate.js'
-import myMailTemplate from './admin/common/userCenter/myMailTemplate.js'
-
-
-import billManage from './admin/common/billManage.js'
-import orderManage from './admin/common/orderManage.js'
-import orderManageV2 from './admin/common/orderManageV2.js'
-import emailManage from './admin/common/emailManage.js'
-
-import aiServer from './admin/common/googleStudio/aiServer.js'
-
-import SysPermissionButton from '../components/common/SysPermissionButton.js'
-
-import sendGridAccount from './admin/common/sendGridAccount.js'
-import emailCheckActive from './admin/common/emailCheckActive.js'
-import sieveActive from './admin/common/sieveActive.js'
-import aiTokenStatistics from './admin/common/aiTokenStatistics.js'
-
-import dnsRecordList from  './admin/common/dnsRecord/list.js'
 
 import taskTypes from 'components/taskTypes'
 import Head from '../head'
@@ -536,11 +499,11 @@ class BackStage extends Component {
         <Header className={Style.header}>
           <div style={{display: 'flex', color: '#000', fontFamily: "MiSans VF", fontStyle: 'normal', fontWeight: 330}}>
             <div className={Style.logo} />
-            <div style={{fontSize: 36, fontWeight: 520, lineHeight: '80px'}}>TNT 邮件</div>
+            <div style={{fontSize: 36, fontWeight: 520, lineHeight: '80px'}}>Quant Trading</div>
 
-            <div style={{fontSize: 20, lineHeight: '80px', marginLeft: 100, cursor: 'pointer'}} onClick={()=>{this.props.history.push('/main')}}>首页</div>
+            {/* <div style={{fontSize: 20, lineHeight: '80px', marginLeft: 100, cursor: 'pointer'}} onClick={()=>{this.props.history.push('/main')}}>首页</div>
             <div style={{fontSize: 20, lineHeight: '80px', marginLeft: 47, cursor: 'pointer'}} onClick={() => {window.open('https://tnt-2.gitbook.io/tntmail/', '_blank')}}>操作指南</div>
-            <div style={{fontSize: 20, lineHeight: '80px', marginLeft: 47, cursor: 'pointer'}} onClick={()=>{window.open('https://tnt-2.gitbook.io/tntmail/api-wen-dang', "_blank")}}>API</div>
+            <div style={{fontSize: 20, lineHeight: '80px', marginLeft: 47, cursor: 'pointer'}} onClick={()=>{window.open('https://tnt-2.gitbook.io/tntmail/api-wen-dang', "_blank")}}>API</div> */}
             {/* <div style={{fontSize: 20, lineHeight: '80px', marginLeft: 47, cursor: 'pointer'}}>联系我们</div> */}
           </div>
           <div className={Style.headerRight}>
@@ -675,61 +638,15 @@ class BackStage extends Component {
                 <Route exact={true} path="/cloud2/" component={Index} />
                 <Route exact={true} path="/cloud/" component={UserInfo} />
 
-
                 <Route exact={true} path="/admin/" component={Home} />
-                {/* <Route path="/cloud/user/machine" component={UserVps} /> */}
                 <Route path="/cloud/account/socks5/list" component={Socks5} />
                 <Route path="/cloud/user/proxyAccount/list" component={proxyAccountList}/>
-                <Route path="/cloud/account/platform/list" component={PlatformList} />
-                {/* <Route path="/admin/account/sendMessageTask"cloud component={StrangerSendMsg} /> */}
-                <Route path="/cloud/account/email/list" component={UserAccount} />
-                <Route path="/cloud/account/task/list" component={TaskList} />
-                <Route path="/cloud/account/receive/list" component={Receive} />
+                <Route path="/cloud/account/account" component={UserAccount} />
                 <Route path="/cloud/account/accountGroup" component={UserAccountGroup} />
-                {/* <Route path="/cloud/user/balanceDetail" component={BalanceDetail} /> */}
-                {/* <Route path="/cloud/user/payment" component={Payment} /> */}
                 <Route path="/admin/account/role/list" component={roleList} />
                 <Route path="/admin/account/user/list" component={User} />
-                {/* <Route path="/admin/ac/account/vps/list" component={Vps} /> */}
                 <Route path="/admin/ac/account/params/globalParams" component={Params} />
-
                 <Route path="/cloud/user/apiKey/list" component={ApiKeyList}/>
-                <Route path="/cloud/account/googleStudio/list" component={googleStudioList}/>
-                <Route path="/cloud/account/chatgpt/list" component={chatgptList}/>
-                <Route path="/cloud/account/aiServer/list" component={aiServer}/>
-
-
-                <Route path="/cloud/user/center" component={UserInfo} />
-                <Route path="/cloud/user/order" component={MyOrder} />
-                <Route path="/cloud/user/orderV2" component={MyOrderV2} />
-                <Route path="/cloud/user/email" component={MyEmail} />
-                <Route path="/cloud/user/bill" component={MyBill} />
-                <Route path="/cloud/user/recharge" component={Recharge} />
-                <Route path="/cloud/user/ownerUser" component={ownerUser} />
-                <Route path="/cloud/user/batchSendEmail" component={batchSendEmail} />
-                <Route path="/cloud/user/batchSendEmailAdd" component={batchSendEmailAdd} />
-                <Route path="/cloud/user/linkCheck" component={linkCheck} />
-                <Route path="/cloud/user/contentAIGen" component={contentAIGen} />
-                <Route path="/cloud/user/tgnetToSession" component={tgnetToSession} />
-                <Route path="/cloud/user/systemMailTemplate" component={systemMailTemplate}/>
-                <Route path="/cloud/user/myMailTemplate" component={myMailTemplate}/>
-
-
-                <Route path="/cloud/account/billManage/list" component={billManage} />
-                <Route path="/cloud/account/order/list" component={orderManage} />
-                <Route path="/cloud/account/orderV2/list" component={orderManageV2} />
-                <Route path="/cloud/account/emailOrder/list" component={emailManage} />
-
-                <Route path="/cloud/account/apiResource/list" component={sendGridAccount}/>
-
-                <Route path="/cloud/account/emailCheckActive/list" component={emailCheckActive}/>
-                <Route path="/cloud/account/sieveActive/list" component={sieveActive}/>
-                <Route path="/cloud/account/aiTokenStatistics/list" component={aiTokenStatistics}/>
-
-                <Route path="/admin/account/aiModel/list" component={aiModelList}/>
-
-                <Route path="/admin/common/dnsRecord/list" component={dnsRecordList}/>
-
               </Switch>
             </Content>
           </Layout>

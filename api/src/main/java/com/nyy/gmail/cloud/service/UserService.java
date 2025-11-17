@@ -6,11 +6,9 @@ import com.nyy.gmail.cloud.common.constants.RedisConstants;
 import com.nyy.gmail.cloud.common.exception.CommonException;
 import com.nyy.gmail.cloud.common.pagination.PageResult;
 import com.nyy.gmail.cloud.common.response.ResultCode;
-import com.nyy.gmail.cloud.entity.mongo.CommissionRecord;
 import com.nyy.gmail.cloud.entity.mongo.Role;
 import com.nyy.gmail.cloud.entity.mongo.User;
 import com.nyy.gmail.cloud.model.dto.*;
-import com.nyy.gmail.cloud.repository.mongo.CommissionRecordRepository;
 import com.nyy.gmail.cloud.repository.mongo.MenuRepository;
 import com.nyy.gmail.cloud.repository.mongo.RoleRepository;
 import com.nyy.gmail.cloud.repository.mongo.UserRepository;
@@ -60,9 +58,6 @@ public class UserService {
 
     @Autowired
     private AccountService accountService;
-
-    @Autowired
-    private CommissionRecordRepository commissionRecordRepository;
 
     public List<UserIDDTO> findUserIDByIds(List<String> ids) {
         return userRepository.findUserIDByIds(ids);
@@ -353,28 +348,5 @@ public class UserService {
     public void clearFailCount(String ip) {
         String key = getLoginFailedTimeKey(ip);
         redisTemplate.delete(key);
-    }
-
-    public List<QueryReferRespDto> queryRefer(String id) {
-        List<User> userList = userRepository.findByRefererLike(id);
-        List<User> list = userList.stream().filter(e -> StringUtils.isNotEmpty(e.getReferrer()) && Arrays.stream(e.getReferrer().split(",")).toList().contains(id)).toList();
-        List<String> ids = list.stream().map(User::getUserID).toList();
-
-        List<CommissionRecord> commissionRecords = commissionRecordRepository.findByFromIdsAndUserID(ids, id);
-
-        Map<String, BigDecimal> map = commissionRecords.stream().collect(Collectors.toMap(CommissionRecord::getFromUserID, CommissionRecord::getAmount, (k1, k2) -> k1));
-
-        return list.stream().map(e -> {
-            List<String> refs = Arrays.stream(e.getReferrer().split(",")).toList();
-            int i = refs.indexOf(id);
-
-            QueryReferRespDto queryReferRespDto = new QueryReferRespDto();
-            queryReferRespDto.setAmount(map.getOrDefault(e.getUserID(), BigDecimal.ZERO));
-            queryReferRespDto.setUserID(e.getUserID());
-            queryReferRespDto.setUserName(e.getName());
-            queryReferRespDto.setCreateTime(e.getCreateTime());
-            queryReferRespDto.setLevel(refs.size() - i);
-            return queryReferRespDto;
-        }).collect(Collectors.toList());
     }
 }

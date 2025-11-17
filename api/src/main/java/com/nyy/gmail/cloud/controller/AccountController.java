@@ -97,40 +97,6 @@ public class AccountController {
         return ResponseResult.success();
     }
 
-    // 3. 导出
-    @PostMapping("exportAccount")
-    public Result exportAccount(@RequestBody(required = false) ExportAccountReqDto reqDto) {
-        accountService.exportAccount(reqDto, Session.currentSession().userID);
-        return ResponseResult.success();
-    }
-
-    // 4. 导出记录列表
-    @PostMapping("exportAccount/{pageSize}/{page}")
-    public Result<PageResult<AccountExportRecord>> exportAccountList(@PathVariable("pageSize") int pageSize,
-                                                                     @PathVariable("page") int page, @RequestBody(required = false) ExportAccountListReqDto reqDto) {
-        PageResult<AccountExportRecord> result = accountService.exportAccountList(reqDto, pageSize, page, Session.currentSession().userID);
-        return ResponseResult.success(result);
-    }
-
-    @PostMapping("usedInfo/{pageSize}/{page}")
-    public Result<PageResult<UsedInfoRespDto>> usedInfoList(@PathVariable("pageSize") int pageSize,
-                                                                     @PathVariable("page") int page, @RequestBody(required = false) UsedInfoReqDto reqDto) {
-        PageResult<UsedInfoRespDto> result = accountService.usedInfoList(reqDto, pageSize, page, Session.currentSession().userID);
-        return ResponseResult.success(result);
-    }
-
-    @PostMapping("resetPlatform")
-    public Result resetPlatform(@RequestBody(required = false) ResetPlatformReqDto reqDto) {
-        accountService.resetPlatform(reqDto, Session.currentSession().userID);
-        return ResponseResult.success();
-    }
-
-    @PostMapping("queryPlatformCount")
-    public Result<Integer> queryPlatformCount(@RequestBody(required = false) QueryPlatformCountReqDto reqDto) {
-        Integer num = accountService.queryPlatformCount(reqDto, Session.currentSession().userID);
-        return ResponseResult.success(num);
-    }
-
     @PostMapping("export")
     public void export(String phone, String onlineStatus, String email, String platform, String platform2, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userID = Session.currentSession().getUserID();

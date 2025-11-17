@@ -7,11 +7,6 @@ import com.nyy.gmail.cloud.common.response.Result;
 import com.nyy.gmail.cloud.entity.mongo.Account;
 import com.nyy.gmail.cloud.enums.AccountOnlineStatus;
 import com.nyy.gmail.cloud.enums.AccountTypeEnums;
-import com.nyy.gmail.cloud.gateway.CookieGatewayClient;
-import com.nyy.gmail.cloud.gateway.dto.GetEmailDetailResponse;
-import com.nyy.gmail.cloud.gateway.dto.GetInboxEmailListResponse;
-import com.nyy.gmail.cloud.gateway.dto.MakeSessionResponse;
-import com.nyy.gmail.cloud.gateway.dto.SendEmailResponse;
 import com.nyy.gmail.cloud.repository.mongo.AccountRepository;
 import com.nyy.gmail.cloud.utils.UUIDUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +22,6 @@ import java.util.List;
 @RestController
 @RequestMapping({"/api/test"})
 public class TestController {
-    @Autowired
-    private CookieGatewayClient gatewayClient;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -64,7 +57,7 @@ public class TestController {
         }
 
         // 登录
-        MakeSessionResponse makeSessionResponse = gatewayClient.makeSession(account);
+//        MakeSessionResponse makeSessionResponse = gatewayClient.makeSession(account);
 //        GetInboxEmailListResponse inboxEmailList = gatewayClient.getInboxEmailList(0, account);
 
         // "thread_id":"thread-f:1840412556651966744"  message_id":"msg-f:1840412556651966744"

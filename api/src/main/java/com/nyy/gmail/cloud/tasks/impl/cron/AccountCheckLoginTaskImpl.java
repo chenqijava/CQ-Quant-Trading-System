@@ -8,7 +8,6 @@ import com.nyy.gmail.cloud.enums.CronTaskTypesEnums;
 import com.nyy.gmail.cloud.enums.SubTaskStatusEnums;
 import com.nyy.gmail.cloud.framework.TaskSchedulingService;
 import com.nyy.gmail.cloud.framework.dto.AddTaskDomainDto;
-import com.nyy.gmail.cloud.gateway.GatewayClient;
 import com.nyy.gmail.cloud.repository.mongo.AccountRepository;
 import com.nyy.gmail.cloud.service.Socks5Service;
 import com.nyy.gmail.cloud.tasks.CronBaseTask;
@@ -27,9 +26,6 @@ public class AccountCheckLoginTaskImpl implements CronBaseTask {
 
     @Autowired
     private TaskSchedulingService taskSchedulingService;
-
-    @Autowired
-    private GatewayClient gatewayClient;
 
     @Autowired
     private AccountRepository accountRepository;

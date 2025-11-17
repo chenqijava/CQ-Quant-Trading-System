@@ -54,9 +54,6 @@ public class Socks5Service {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
-    @Resource
-    private AccountServiceHelper accountServiceHelper;
-
     private final static int socksUseLimit = 50;
 
     @Autowired
@@ -198,7 +195,6 @@ public class Socks5Service {
             }
             // 如果能查询出来，说明需要统一下线
             for (Account account : onlineAccountList) {
-                accountServiceHelper.offline(new IdsListDTO(Collections.singletonList(account.get_id())), account.getUserID());
             }
         } else if (Socks5StatusEnum.OK.getValue() == socks5.getStatusFlag()) {
         } else {

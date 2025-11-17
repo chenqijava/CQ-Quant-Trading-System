@@ -50,16 +50,11 @@ public class MongoDataInit {
         //  先将所有菜单的isDel置成true,在菜单初始化时会将isDel置成false,查询菜单时只会查isDel为false的数据
         mongoTemplate.updateMulti(new Query(), new Update().set("isDel", true), Menu.class);
         //  初始化菜单
-        this.initMenus(taskType.equals("googleai") ? Arrays.asList(new MenuTree().setKey(MenuType.resource).setIcon(new HashMap<String, String>() {{
+        this.initMenus(Arrays.asList(new MenuTree().setKey(MenuType.resource).setIcon(new HashMap<String, String>() {{
                     put("type", "Frame-2.png");
                 }}).setChildList(Arrays.asList(
-                        new MenuTree().setKey(MenuType.platform),
                         new MenuTree().setKey(MenuType.accountGroup),
-                        new MenuTree().setKey(MenuType.email),
-                        new MenuTree().setKey(MenuType.task),
-                        new MenuTree().setKey(MenuType.googleStudio),
-                        new MenuTree().setKey(MenuType.chatgpt),
-                        new MenuTree().setKey(MenuType.AITokenStatistics)
+                        new MenuTree().setKey(MenuType.account)
                 )),
                 new MenuTree().setKey(MenuType.settings).setIcon(new HashMap<String, String>() {{
                     put("type", "zhongxin.png");
@@ -72,78 +67,6 @@ public class MongoDataInit {
                                 new MenuTree().setKey(MenuType.apiKey),
                                 new MenuTree().setKey(MenuType.globalParams)
                         ))
-        ) : taskType.equals("tgnet") ?  Arrays.asList(new MenuTree().setKey(MenuType.resource).setIcon(new HashMap<String, String>() {{
-                    put("type", "Frame-2.png");
-                }}).setChildList(Arrays.asList(
-                        new MenuTree().setKey(MenuType.platform),
-                        new MenuTree().setKey(MenuType.accountGroup),
-                        new MenuTree().setKey(MenuType.email)
-                )),
-                new MenuTree().setKey(MenuType.settings).setIcon(new HashMap<String, String>() {{
-                    put("type", "zhongxin.png");
-                }}).setChildList(
-                        Arrays.asList(
-                                new MenuTree().setKey(MenuType.adminRole),
-                                new MenuTree().setKey(MenuType.adminUser),
-                                new MenuTree().setKey(MenuType.apiKey),
-                                new MenuTree().setKey(MenuType.globalParams)
-                        )),
-                    new MenuTree().setKey(MenuType.userCenter).setIcon(new HashMap<String, String>() {{
-                        put("type", "Frame-2.png");
-                    }}).setChildList(Arrays.asList(
-                            new MenuTree().setKey(MenuType.userInfo),
-                            new MenuTree().setKey(MenuType.myBill),
-                            new MenuTree().setKey(MenuType.recharge),
-                            new MenuTree().setKey(MenuType.tgNetToSession)
-                    ))
-                )
-                :
-                Arrays.asList(new MenuTree().setKey(MenuType.resource).setIcon(new HashMap<String, String>() {{
-                put("type", "Frame-2.png");
-            }}).setChildList(Arrays.asList(
-                new MenuTree().setKey(MenuType.platform),
-                new MenuTree().setKey(MenuType.accountGroup),
-                new MenuTree().setKey(MenuType.email),
-                new MenuTree().setKey(MenuType.apiResource),
-                new MenuTree().setKey(MenuType.receive),
-                new MenuTree().setKey(MenuType.task),
-                new MenuTree().setKey(MenuType.billManage),
-                new MenuTree().setKey(MenuType.orderManage),
-                new MenuTree().setKey(MenuType.orderManageV2),
-                new MenuTree().setKey(MenuType.emailOrder),
-                new MenuTree().setKey(MenuType.sieveActive),
-                new MenuTree().setKey(MenuType.AITokenStatistics)
-            )),
-            new MenuTree().setKey(MenuType.settings).setIcon(new HashMap<String, String>() {{
-                put("type", "zhongxin.png");
-            }}).setChildList(
-                    Arrays.asList(
-                            new MenuTree().setKey(MenuType.socks5),
-                            new MenuTree().setKey(MenuType.proxyAccount),
-                            new MenuTree().setKey(MenuType.aiModelManage),
-                            new MenuTree().setKey(MenuType.adminRole),
-                            new MenuTree().setKey(MenuType.adminUser),
-                            new MenuTree().setKey(MenuType.apiKey),
-                            new MenuTree().setKey(MenuType.aiServer),
-                            new MenuTree().setKey(MenuType.globalParams)
-                    )),
-            new MenuTree().setKey(MenuType.userCenter).setIcon(new HashMap<String, String>() {{
-                put("type", "Frame-2.png");
-            }}).setChildList(Arrays.asList(
-                    new MenuTree().setKey(MenuType.userInfo),
-                    new MenuTree().setKey(MenuType.myOrder),
-                    new MenuTree().setKey(MenuType.myOrderV2),
-                    new MenuTree().setKey(MenuType.myEmail),
-                    new MenuTree().setKey(MenuType.myBill),
-                    new MenuTree().setKey(MenuType.recharge),
-                    new MenuTree().setKey(MenuType.ownerUser),
-                    new MenuTree().setKey(MenuType.batchSendEmail),
-                    new MenuTree().setKey(MenuType.linkCheck),
-                    new MenuTree().setKey(MenuType.ContentAIGen),
-                    new MenuTree().setKey(MenuType.dnsRecord),
-                    new MenuTree().setKey(MenuType.systemMailTemplate),
-                    new MenuTree().setKey(MenuType.myMailTemplate)
-            ))
         ), null);
         //  删除未更新的菜单项
         DeleteResult deleteResult = mongoTemplate.remove(new Query(where("isDel").is(true)), Menu.class);

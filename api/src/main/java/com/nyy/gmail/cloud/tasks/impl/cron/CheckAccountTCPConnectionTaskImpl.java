@@ -7,7 +7,6 @@ import com.nyy.gmail.cloud.enums.CronTaskTypesEnums;
 import com.nyy.gmail.cloud.enums.SubTaskStatusEnums;
 import com.nyy.gmail.cloud.framework.TaskSchedulingService;
 import com.nyy.gmail.cloud.framework.dto.AddTaskDomainDto;
-import com.nyy.gmail.cloud.gateway.GatewayClient;
 import com.nyy.gmail.cloud.tasks.CronBaseTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ public class CheckAccountTCPConnectionTaskImpl implements CronBaseTask {
 
     @Autowired
     private TaskSchedulingService taskSchedulingService;
-
-    @Autowired
-    private GatewayClient gatewayClient;
 
     @Override
     public boolean checkTask(SubTask task, Account account, Date now) {

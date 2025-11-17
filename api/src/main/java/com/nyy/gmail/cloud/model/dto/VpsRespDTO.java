@@ -1,6 +1,5 @@
 package com.nyy.gmail.cloud.model.dto;
 
-import com.nyy.gmail.cloud.entity.mongo.Vps;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,8 +8,6 @@ import java.util.Map;
 
 @Data
 public class VpsRespDTO {
-
-    private List<Vps> data;
 
     private Long total;
 

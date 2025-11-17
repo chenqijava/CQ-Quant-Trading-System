@@ -52,47 +52,6 @@ const params = [
   // },
   {
     type: 'account',
-    code: 'checkAccountInterval',
-    desc: '邮件接码配置：检查邮箱可用时间间隔（秒）',
-  },
-  {
-    type: 'webConfig',
-    code: 'baseUrl',
-    desc: '邮件接码配置：网站域名',
-  },
-  {
-    type: 'account',
-    code: 'onceImageNum',
-    desc: 'AI图片识别配置：一次请求处理的图片数量',
-  },
-  {
-    type: 'account',
-    code: 'tooManyWaitSecond',
-    desc: 'AI图片识别配置：图片识别429等待秒数',
-  },
-
-  {
-    type: 'account',
-    code: 'sendEmailIntervalInSecond',
-    desc: '邮件群发配置：同账号发送间隔(秒)',
-  },
-  {
-    type: 'account',
-    code: 'sendEmailMaxNumByDay',
-    desc: '邮件群发配置：同账号单日发送上限',
-  },
-  {
-    type: 'account',
-    code: 'sendEmailAiModel',
-    desc: '邮件群发配置：AI模型(chatgpt/google)',
-  },
-  {
-    type: 'account',
-    code: 'tuiRetry',
-    desc: '邮件群发配置：退信重试次数',
-  },
-  {
-    type: 'account',
     code: 'whiteIp',
     desc: '请求429IP白名单',
   },
@@ -101,54 +60,6 @@ const params = [
     code: 'whiteIp2',
     desc: '请求429IP白名单2(并发更大)',
   },
-  // {
-  //   type: 'account',
-  //   code: 'useThirdGmailCheck',
-  //   desc: '邮箱检测配置：使用第三方检测Gmail',
-  // },
-  // {
-  //   type: 'account',
-  //   code: 'useThreadNumGmailCheck',
-  //   desc: '邮箱检测配置：启动检测线程数',
-  // },
-  // {
-  //   type: 'account',
-  //   code: 'onceCheckTimeout',
-  //   desc: '邮箱检测配置：单次检测超时时间（秒）',
-  // },
-  {
-    type: "account",
-    code: "severnumber",
-    desc: "DNS域名访问的服务器编号",
-  },
-  {
-    type: 'account',
-    code: 'linkCheckTemplate',
-    desc: '链接检测配置：检测邮件内容模版',
-    itemType: 'file'
-  },
-  {
-    type: 'account',
-    code: 'linkCheckSubjectTemplate',
-    desc: '链接检测配置：检测邮件主题模版',
-    itemType: 'file'
-  },
-  {
-    type: 'task',
-    code: 'openSieveActiveTask',
-    itemType: 'switch',
-    desc: '筛开通配置：是否执行筛开通任务',
-  },
-  {
-    type: 'server',
-    code: 'cloudMasterURL',
-    desc: '筛开通配置：筛开通总控服务器地址',
-  },
-  {
-    type: "server",
-    code: "cloudMasterCookie",
-    desc: "筛开通配置：筛开通总控服务器Cookie",
-  }
 ];
 
 const rechargeMethodParam = {
@@ -270,14 +181,14 @@ class MyComponent extends Component {
       await new Promise(resolve => setTimeout(resolve, 200));
     }
     // let ps = params.map();
-    let res = await axios.get(`/api/consumer/params/${rechargeMethodParam.type || pageType}/get/${rechargeMethodParam.code}`);
-    if (res.data.code) {
-      this.setState({ rechargeMethod: (typeof res.data.value === 'string' ? JSON.parse(res.data.value) : res.data.value).map((e, index) => ({ ...e, index: index + 1 })) });
-    }
-    let res2 = await axios.get(`/api/consumer/params/${proxyMethodParam.type || pageType}/get/${proxyMethodParam.code}`);
-    if (res2.data.code) {
-      this.setState({ proxyMethod: (typeof res2.data.value === 'string' ? JSON.parse(res2.data.value) : res2.data.value).map((e, index) => ({ ...e, index: index + 1 })) });
-    }
+    // let res = await axios.get(`/api/consumer/params/${rechargeMethodParam.type || pageType}/get/${rechargeMethodParam.code}`);
+    // if (res.data.code) {
+    //   this.setState({ rechargeMethod: (typeof res.data.value === 'string' ? JSON.parse(res.data.value) : res.data.value).map((e, index) => ({ ...e, index: index + 1 })) });
+    // }
+    // let res2 = await axios.get(`/api/consumer/params/${proxyMethodParam.type || pageType}/get/${proxyMethodParam.code}`);
+    // if (res2.data.code) {
+    //   this.setState({ proxyMethod: (typeof res2.data.value === 'string' ? JSON.parse(res2.data.value) : res2.data.value).map((e, index) => ({ ...e, index: index + 1 })) });
+    // }
     await Promise.all(ps);
     this.setState({ config });
     if (config[`index-placard`]) {
@@ -574,7 +485,7 @@ class MyComponent extends Component {
             </div>
           )}
           <SysPermissionButton permission="buttonTest">测试按钮</SysPermissionButton>
-          <div>
+          {/* <div>
             <div>充值阶梯价格设置&nbsp;<Button type="link" onClick={() => {
               this.setState({ addRechargeMethod: true })
             }}>新增</Button></div>
@@ -587,7 +498,7 @@ class MyComponent extends Component {
                 loading={this.state.loading}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* <div>
         <div>返佣比例设置&nbsp;<Button type="link" onClick={() => {

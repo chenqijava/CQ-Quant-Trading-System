@@ -777,63 +777,6 @@ class MyComponent extends Component {
         ellipsis: true,
       },
       {
-        title: '群发账户余额',
-        dataIndex: 'restSendEmailCount',
-        key: 'restSendEmailCount',
-        width: 120,
-        ellipsis: true,
-      },
-      {
-        title: '群发账户累计金额',
-        dataIndex: 'totalSendEmailCount',
-        key: 'totalSendEmailCount',
-        width: 150,
-        ellipsis: true,
-      },
-      {
-        title: '充值功能',
-        dataIndex: 'openRecharge',
-        key: 'openRecharge',
-        width: 120,
-        ellipsis: true,
-        render: (v) => {
-          return v === 'open' ? '已开通' : '未开通'
-        }
-      },
-      {
-        title: '推荐人数',
-        dataIndex: 'referrerCount',
-        key: 'referrerCount',
-        width: 120,
-        ellipsis: true,
-        render: (v, r) => {
-          return <Button type="link" onClick={() => { this.referOpen(r) }}>{v || 0}</Button>
-        }
-      },
-      // {
-      //   title: 'socks5来源',
-      //   dataIndex: 'socks5Use',
-      //   key: 'socks5Use',
-      //   width: 158,
-      //   ellipsis: true,
-      //   align: 'center',
-      //   render: (v, r) => (
-      //     <Radio.Group size="small" value={v} onChange={this.setUseSocks5.bind(this, r.userID)}>
-      //       {
-      //         [{
-      //           label: '自己上传',
-      //           value: 'self',
-      //         }, {
-      //           label: 'admin',
-      //           value: 'admin',
-      //         }].map(ws => (
-      //           <Radio.Button value={ws.value}>{ws.label}</Radio.Button>
-      //         ))
-      //       }
-      //     </Radio.Group>
-      //   )
-      // },
-      {
         title: '状态',
         dataIndex: 'status',
         key: 'status',
@@ -880,7 +823,6 @@ class MyComponent extends Component {
               this.setState({ editUser: r, addVisible: true, onlyRead: false, name: r.name, userID: r.userID, password: r.password, newPassword: r.newPassword, roleId: r.role })
             }}>编辑</Button>
             {this.props.userID == 'admin' ? <Button type="link" onClick={() => { this.delete(r) }}>删除</Button> : ''}
-            {this.props.userID == 'admin' ? <Button type="link" style={{ paddingRight: 0 }} onClick={() => { this.priceOpen(r) }}>调整价格</Button> : ''}
           </div>)
         }
       },
@@ -901,19 +843,6 @@ class MyComponent extends Component {
         width: 150,
         ellipsis: true,
       },
-      {
-        title: '调整价格',
-        dataIndex: 'price',
-        key: 'price',
-        width: 180,
-        ellipsis: true,
-        render: (v, r) => {
-          return <Input value={v} onChange={e => {
-            r.price = e.target.value
-            this.setState({ data1: this.state.data1 })
-          }}></Input>
-        }
-      }
     ]
 
     const columns2 = [
@@ -1039,22 +968,6 @@ class MyComponent extends Component {
 
             <div
               className={this.state.selectedRowKeys && this.state.selectedRowKeys.length > 0 ? "search-query-btn" : "search-reset-btn"}
-              onClick={this.chargeSendEmailOpen.bind(this)}>群发账户充值
-            </div>
-
-            <div
-              className={this.state.selectedRowKeys && this.state.selectedRowKeys.length > 0 ? "search-query-btn" : "search-reset-btn"}
-              onClick={this.closeRecharge.bind(this)}>关闭充值
-            </div>
-
-            <div
-              className={this.state.selectedRowKeys && this.state.selectedRowKeys.length > 0 ? "search-query-btn" : "search-reset-btn"}
-              onClick={this.openRecharge.bind(this)}>开通充值
-            </div>
-
-
-            <div
-              className={this.state.selectedRowKeys && this.state.selectedRowKeys.length > 0 ? "search-query-btn" : "search-reset-btn"}
               onClick={this.forbidden.bind(this)}>冻结
             </div>
             <div
@@ -1062,10 +975,6 @@ class MyComponent extends Component {
               onClick={this.unforbidden.bind(this)}>解冻
             </div>
 
-            <div
-              className={this.state.selectedRowKeys && this.state.selectedRowKeys.length > 0 ? "search-query-btn" : "search-reset-btn"}
-              onClick={() => this.priceOpen()}>调整价格
-            </div>
             {this.props.userID == 'admin' ? <div
               className={this.state.selectedRowKeys && this.state.selectedRowKeys.length > 0 ? "search-delete-btn" : "search-reset-btn"}
               onClick={() => {

@@ -21,8 +21,6 @@ import java.util.Map;
 @Component
 public class ClearResourceSchedule {
 
-    @Autowired
-    private GoogleStudioApiKeyRepository googleStudioApiKeyRepository;
 
     @Autowired
     private GroupTaskRepository groupTaskRepository;
@@ -33,8 +31,6 @@ public class ClearResourceSchedule {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
-    private TaskServerRecordRepository taskServerRecordRepository;
 
     @Async("async")
     @Scheduled(cron = "0 0 4 * * ?") // 每天四点执行
@@ -42,33 +38,5 @@ public class ClearResourceSchedule {
         log.info("开始清理图形验证码");
         CaptchaUtils.clearCaptchaImage();
         log.info("清理图形验证码完成");
-    }
-
-    @Async("async")
-    @Scheduled(cron = "0 0/10 * * * ?")
-    public void updateNextUseTime() {
-        googleStudioApiKeyRepository.updateNextUseTime();
-    }
-
-    @Async("async")
-    @Scheduled(cron = "0 0/10 * * * ?")
-    public void clearSubTask() {
-        List<GroupTask> imageRecognition = groupTaskRepository.findImageRecognition();
-        for (GroupTask groupTask : imageRecognition) {
-            groupTaskRepository.deleteById(groupTask.get_id());
-            subTaskRepository.deleteImageRecognition(groupTask.get_id());
-        }
-    }
-
-    @Async("async")
-    @Scheduled(cron = "0 0 8 * * ?")
-    public void resetSendGrid() {
-        accountRepository.resetSendGridOnlineStatus();
-    }
-
-    @Async("async")
-    @Scheduled(cron = "0 0/10 * * * ?")
-    public void clearTaskRecord() {
-        taskServerRecordRepository.clearExipreRecord();
     }
 }

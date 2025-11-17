@@ -9,8 +9,8 @@ public enum MenuType {
 //    apiKey("API管理", "/cloud/user/apiKey/list"),
 
 //    accountMenu("账号管理"),
-    accountGroup("邮箱分组", "/cloud/account/accountGroup"),
-//    account("账号管理", "/cloud/account/account"),
+    accountGroup("账号分组", "/cloud/account/accountGroup"),
+    account("账号管理", "/cloud/account/account"),
 
 //    batchSendMessage("群发消息"),
 //    batchSendMessageTask("群发消息", "/admin/account/sendMessageTask"),

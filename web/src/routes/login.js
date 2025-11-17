@@ -77,7 +77,7 @@ class MyForm extends Component {
       if (this.props.user.info.userID == "admin")
         return <Redirect exact from="/" to="/admin/"/>;
       else
-        return <Redirect exact from="/" to="/main"/>
+        return <Redirect exact from="/" to="/cloud/"/>
     } else {
       if (!this.state.isFirst) {
         // message.error('账号密码错误！')
@@ -149,7 +149,7 @@ class MyComponent extends Component {
           }}>
             <div style={{display: "inline-flex"}}>
               <div className={Style.logo2} style={{marginTop: 30,marginLeft:16}}></div> 
-              <div style={{marginTop: 40,marginLeft: 10}}><div style={{color:'#000',fontFamily: 'PingFang SC',fontSize: '28px',fontWeighttyle: 'normal',fontWeight: '600'}}>TNT 邮件</div>
+              <div style={{marginTop: 40,marginLeft: 10}}><div style={{color:'#000',fontFamily: 'PingFang SC',fontSize: '28px',fontWeighttyle: 'normal',fontWeight: '600'}}>Quant Trading</div>
               <ChangeLocale/>
               </div>
               </div>

@@ -9,7 +9,6 @@ import com.nyy.gmail.cloud.entity.mongo.*;
 import com.nyy.gmail.cloud.enums.*;
 import com.nyy.gmail.cloud.model.dto.*;
 import com.nyy.gmail.cloud.common.response.ResultCode;
-import com.nyy.gmail.cloud.gateway.GatewayClient;
 import com.nyy.gmail.cloud.repository.mongo.*;
 import com.nyy.gmail.cloud.repository.mysql.VpsInfoRepository;
 import com.nyy.gmail.cloud.utils.FileUtils;
@@ -36,9 +35,6 @@ import java.util.concurrent.TimeUnit;
 public class AccountService {
 
     @Autowired
-    private GatewayClient gatewayClient;
-
-    @Autowired
     private AccountRepository accountRepository;
     @Autowired
     private Socks5Repository socks5Repository;
@@ -63,15 +59,6 @@ public class AccountService {
 
     @Resource
     private AccountGroupRepository accountGroupRepository;
-
-    @Resource
-    private AccountServiceHelper accountServiceHelper;
-
-    @Autowired
-    private AccountPlatformRepository accountPlatformRepository;
-
-    @Autowired
-    private AccountExportRecordRepository accountExportRecordRepository;
 
     @Autowired
     private SubTaskRepository subTaskRepository;
@@ -214,135 +201,6 @@ public class AccountService {
                 "publishTotalCount", (long) i,
                 "taskDesc", "导入账号",
                 "addMethod", "2"), userID);
-    }
-
-    public GroupTask exportAccount(ExportAccountReqDto reqDto, String userID) {
-        if (StringUtils.isEmpty(reqDto.getPlatformId())) {
-            throw new CommonException(ResultCode.PARAMS_IS_INVALID);
-        }
-        if (reqDto.getCount() == null && CollectionUtils.isEmpty(reqDto.getIds())) {
-            throw new CommonException(ResultCode.PARAMS_IS_INVALID);
-        }
-
-        AccountPlatform platform = accountPlatformRepository.findOneByIdAndUserID(reqDto.getPlatformId(), userID);
-
-        int count = CollectionUtils.isEmpty(reqDto.getIds()) ? reqDto.getCount() : reqDto.getIds().size();
-        AccountExportRecord record = new AccountExportRecord();
-        record.setNumber(count);
-        record.setCreateTime(new Date());
-        record.setUserID(userID);
-        record.setPlatformId(reqDto.getPlatformId());
-        record.setPlatformName(platform.getName());
-
-        accountExportRecordRepository.save(record);
-        // 创建记录
-        return taskUtil.createGroupTask(new ArrayList<>(), TaskTypesEnums.AccountExport, Map.of(
-                "orderId", reqDto.getOrderId() == null ? "" : reqDto.getOrderId(),
-                "exportType", reqDto.getExportType(),
-                "taskDesc", "导出账号",
-                "publishTotalCount", count,
-                "platformId", reqDto.getPlatformId(),
-                "count", reqDto.getCount() == null ? 0 : reqDto.getCount(),
-                "recordId", record.get_id(),
-                "ids", reqDto.getIds() == null ? new ArrayList<>() : reqDto.getIds()), userID);
-    }
-
-    public PageResult<AccountExportRecord> exportAccountList(ExportAccountListReqDto reqDto, int pageSize, int page, String userID) {
-        reqDto.getFilters().put("userID", userID);
-        return accountExportRecordRepository.findByPagination(reqDto, pageSize, page);
-    }
-
-    public PageResult<UsedInfoRespDto> usedInfoList(UsedInfoReqDto reqDto, int pageSize, int page, String userID) {
-        List<AccountPlatform> platforms = accountPlatformRepository.findByUserID(userID);
-        Account account = accountRepository.findByIdAndUserID(reqDto.getAccId(), userID);
-        if (account == null) {
-            throw new CommonException(ResultCode.PARAMS_IS_INVALID);
-        }
-        List<SubTask> subTaskList = subTaskRepository.findByAccIdAndType(account.get_id(), TaskTypesEnums.AccountExport.getCode());
-        Map<String, Date> usedTimeMap = new HashMap<>();
-        Map<String, Date> realUsedTimeMap = new HashMap<>();
-        subTaskList.forEach(e -> {
-            if (e.getParams() != null && e.getParams().containsKey("platformId")) {
-                usedTimeMap.put(e.getParams().get("platformId").toString(), e.getCreateTime());
-                if (e.getParams() != null && e.getParams().containsKey("realUsedTime")) {
-                    realUsedTimeMap.put(e.getParams().get("platformId").toString(), (Date) e.getParams().get("realUsedTime"));
-                }
-
-            }
-        });
-        List<UsedInfoRespDto> list = platforms.stream().map(e -> {
-            UsedInfoRespDto usedInfoRespDto = new UsedInfoRespDto();
-            if (usedTimeMap.containsKey(e.get_id())) {
-                usedInfoRespDto.setUsedTime(usedTimeMap.get(e.get_id()));
-                usedInfoRespDto.setUsed(true);
-            } else {
-                usedInfoRespDto.setUsed(false);
-            }
-            if (realUsedTimeMap.containsKey(e.get_id())) {
-                usedInfoRespDto.setRealUsedTime(realUsedTimeMap.get(e.get_id()));
-            }
-            if (account.getRealUsedPlatformIds() != null && account.getRealUsedPlatformIds().contains(e.get_id())) {
-                usedInfoRespDto.setRealUsed(true);
-            } else {
-                usedInfoRespDto.setRealUsed(false);
-            }
-            usedInfoRespDto.setPlatformId(e.get_id());
-            usedInfoRespDto.setPlatformName(e.getName());
-            return usedInfoRespDto;
-        }).toList();
-
-        if (StringUtils.isNotEmpty(reqDto.getPlatformName())) {
-            list = list.stream().filter(e -> e.getPlatformName().contains(reqDto.getPlatformName())).toList();
-        }
-
-        if (reqDto.getUsed() != null) {
-            list = list.stream().filter(e -> e.getUsed().equals(reqDto.getUsed())).toList();
-        }
-
-        PageResult<UsedInfoRespDto> pageResult = new PageResult<>();
-        pageResult.setPages(list.size() / pageSize + 1);
-        pageResult.setPageNum(page);
-        pageResult.setPageSize(pageSize);
-        pageResult.setTotal((long)list.size());
-
-        int fromIndex = (page - 1) * pageSize;
-        int toIndex = Math.min(fromIndex + pageSize, list.size());
-
-        if (fromIndex >= list.size() || fromIndex < 0) {
-            pageResult.setData(Collections.emptyList());
-        } else {
-            pageResult.setData(list.subList(fromIndex, toIndex));
-        }
-        return pageResult;
-    }
-
-    public void resetPlatform(ResetPlatformReqDto reqDto, String userID) {
-        Account account = accountRepository.findById(reqDto.getAccId());
-        if (account == null) {
-            throw new CommonException(ResultCode.PARAMS_IS_INVALID);
-        }
-        if (account.getUsedPlatformIds() != null && account.getUsedPlatformIds().contains(reqDto.getPlatformId())) {
-            account.setUsed(account.getUsed() == null ? 0 : account.getUsed() <= 0 ? 0 : account.getUsed() - 1);
-            account.setUsedPlatformIds(account.getUsedPlatformIds().stream().filter(e -> !e.equals(reqDto.getPlatformId())).toList());
-            if (account.getRealUsedPlatformIds() != null) {
-                account.setRealUsedPlatformIds(account.getRealUsedPlatformIds().stream().filter(e -> !e.equals(reqDto.getPlatformId())).toList());
-            }
-            accountRepository.update(account);
-        }
-
-        List<SubTask> subTaskList = subTaskRepository.findByAccIdAndType(account.get_id(), TaskTypesEnums.AccountExport.getCode());
-        subTaskList.forEach(e -> {
-            if (e.getParams() != null && e.getParams().containsKey("platformId")) {
-                if (e.getParams().get("platformId").equals(reqDto.getPlatformId())) {
-                    e.setAccid("");
-                    subTaskRepository.save(e);
-                }
-            }
-        });
-    }
-
-    public Integer queryPlatformCount(QueryPlatformCountReqDto reqDto, String userID) {
-        return (int) accountRepository.countNoUsePlatformStock(reqDto.getIds(), reqDto.getPlatformId(), userID);
     }
 
     public List<Account> findAllIncludePart(String userID, AccountListDTO accountListDTO) {
