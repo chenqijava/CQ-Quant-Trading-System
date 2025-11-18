@@ -16,11 +16,11 @@ import java.util.TimeZone;
 @EnableTransactionManagement
 @SpringBootApplication
 @Slf4j
-public class GmailCloudApplication {
+public class CloudApplication {
 
 	public static void main(String[] args) {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-		SpringApplication.run(GmailCloudApplication.class, args);
+		SpringApplication.run(CloudApplication.class, args);
 	}
 
 }
