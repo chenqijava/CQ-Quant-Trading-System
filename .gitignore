@@ -23,8 +23,8 @@
 hs_err_pid*
 replay_pid*
 logs
-mongo
-mysql
+/mongo
+/mysql
 redis
 rocketmq
 .env
