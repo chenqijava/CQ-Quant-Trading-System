@@ -14,7 +14,6 @@ import com.nyy.gmail.cloud.model.dto.GroupAccountStats;
 import com.nyy.gmail.cloud.repository.mongo.AccountGroupRepository;
 import com.nyy.gmail.cloud.repository.mongo.AccountRepository;
 import com.nyy.gmail.cloud.repository.mongo.Socks5Repository;
-import com.nyy.gmail.cloud.repository.mysql.VpsInfoRepository;
 import jakarta.annotation.Resource;
 import jodd.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -55,9 +54,6 @@ public class AccountGroupService {
 
     @Resource
     private JpaPaginationHelper jpaPaginationHelper;
-
-    @Resource
-    private VpsInfoRepository vpsInfoRepository;
 
     public AccountGroupSaveDTO save(AccountGroup accountGroup, String userID, AccountGroupTypeEnums accountGroupTypeEnums) {
         // 校验参数

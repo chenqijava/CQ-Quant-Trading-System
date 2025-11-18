@@ -10,7 +10,6 @@ import com.nyy.gmail.cloud.enums.*;
 import com.nyy.gmail.cloud.model.dto.*;
 import com.nyy.gmail.cloud.common.response.ResultCode;
 import com.nyy.gmail.cloud.repository.mongo.*;
-import com.nyy.gmail.cloud.repository.mysql.VpsInfoRepository;
 import com.nyy.gmail.cloud.utils.FileUtils;
 import com.nyy.gmail.cloud.utils.TaskUtil;
 import jakarta.annotation.Resource;
@@ -50,9 +49,6 @@ public class AccountService {
 
     @Resource
     private JpaPaginationHelper jpaPaginationHelper;
-
-    @Resource
-    private VpsInfoRepository vpsInfoRepository;
 
     @Autowired
     private TaskUtil taskUtil;
@@ -131,10 +127,6 @@ public class AccountService {
         update.set("remark", editAccountDTO.getRemark());
         mongoTemplate.updateFirst(query, update, Account.class);
 
-    }
-
-    public int getUnbindDeviceCount(String userID) {
-        return vpsInfoRepository.countByUserIdAndBindStatusAndDeadTimeGreaterThan(userID, "0", new Date());
     }
 
     public void editGroup(EditAccountGroupDTO editAccountGroupDTO, String userID) {
