@@ -15,7 +15,7 @@ echo [2/4] 构建前端项目...
 cd web
 if errorlevel 1 goto :error_web_dir
 
-call npm run build
+@REM call npm run build
 if errorlevel 1 goto :error_web_build
 
 echo.
