@@ -1,4 +1,4 @@
-FROM bitnami/java:21
+FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 

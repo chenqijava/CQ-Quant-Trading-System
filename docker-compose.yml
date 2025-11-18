@@ -1,6 +1,22 @@
 version: "3.9"
 
 services:
+  main:
+    image: api:0.0.1
+    container_name: api-main
+    ports:
+      - "8088:8088"
+    volumes:
+      - "./:/project"
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - app_net
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+      - broker
+
   nginx:
     image: nginx:stable
     container_name: nginx_server
@@ -17,9 +33,7 @@ services:
     networks:
       - app_net
     depends_on:
-      - mysql
-      - mongo
-      - redis
+      - main
 
   mongo:
     image: mongo:latest
@@ -33,11 +47,6 @@ services:
       TZ: Asia/Shanghai
     networks:
       - app_net
-    healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   mysql:
     image: mysql:8.0
@@ -53,11 +62,6 @@ services:
       - ./mysql/mysql_data:/var/lib/mysql
     networks:
       - app_net
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   redis:
     image: redis:latest
@@ -72,15 +76,11 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     networks:
       - app_net
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   namesrv:
     image: apache/rocketmq:5.1.4
     container_name: rmqnamesrv
+    restart: always
     ports:
       - "9876:9876"
     command: sh mqnamesrv
@@ -92,6 +92,7 @@ services:
   broker:
     image: apache/rocketmq:5.1.4
     container_name: rmqbroker
+    restart: always
     depends_on:
       - namesrv
     ports:
