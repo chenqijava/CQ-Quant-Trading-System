@@ -29,4 +29,3 @@ redis
 rocketmq
 .env
 *.key
-*.pem
