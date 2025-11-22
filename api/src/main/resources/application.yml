@@ -5,51 +5,6 @@ application:
 spring:
   profiles:
     active: local
-  flyway:
-    enabled: true           # 默认就是 true
-    baseline-on-migrate: true # 非空数据库时启用
-    locations: classpath:db/migration
-  application:
-    name: gmail-cloud
-  data:
-    redis:
-      host: ${application.middleware.host}
-      port: 6379
-      database: 0
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://${application.middleware.host}:3306/gmail_cloud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    druid:
-      initial-size: 5
-      min-idle: 5
-      max-active: 100
-      max-wait: 10000
-      time-between-eviction-runs-millis: 5000
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1 FROM DUAL
-      validation-query-timeout: 5
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      remove-abandoned: true
-      remove-abandoned-timeout: 600
-      pool-prepared-statements: true
-      max-open-prepared-statements: 20
-      default-transaction-isolation: READ_COMMITTED
-  jpa:
-    open-in-view: true
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        cache:
-          use_second_level_cache: false
-          use_query_cache: false
   session:
     store-type: redis
     timeout: 30d # 30d
@@ -88,14 +43,6 @@ config:
   resBak: ./gmail-cloud/resBak
   uploadDir: ./gmail-cloud/upload
   ipPlatform: http://all_sms.nbt-sms.com
-
-rocketmq:
-  name-server: ${application.middleware.host}:9876
-  consumer:
-    group: gmail-cloud-consumer-group
-  producer:
-    group: gmail-cloud-producer-group
-    send-message-timeout: 10000
 
 redisson:
   singleServerConfig:

@@ -4,7 +4,6 @@ package com.nyy.gmail.cloud.controller;
 import com.nyy.gmail.cloud.common.MenuType;
 import com.nyy.gmail.cloud.common.Session;
 import com.nyy.gmail.cloud.common.annotation.RequiredPermission;
-import com.nyy.gmail.cloud.common.pagination.JpaPaginationHelper;
 import com.nyy.gmail.cloud.common.pagination.PageResult;
 import com.nyy.gmail.cloud.common.response.ResponseResult;
 import com.nyy.gmail.cloud.common.response.Result;
@@ -29,9 +28,6 @@ public class AccountGroupController {
 
     @Autowired
     private AccountGroupService accountGroupService;
-
-    @Resource
-    private JpaPaginationHelper jpaPaginationHelper;
 
     @PostMapping("/save")
     public Result<AccountGroupSaveDTO> save(@RequestBody AccountGroup accountGroup) {

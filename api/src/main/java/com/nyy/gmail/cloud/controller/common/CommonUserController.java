@@ -7,7 +7,6 @@ import com.nyy.gmail.cloud.model.dto.CommonUserDTO;
 import com.nyy.gmail.cloud.model.dto.CommonUserEditDTO;
 import com.nyy.gmail.cloud.model.dto.GraphCodeDTO;
 import com.nyy.gmail.cloud.model.dto.Params;
-import com.nyy.gmail.cloud.mq.sender.RocketMqProducer;
 import com.nyy.gmail.cloud.utils.*;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;

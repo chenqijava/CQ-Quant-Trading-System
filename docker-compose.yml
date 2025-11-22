@@ -12,10 +12,8 @@ services:
     networks:
       - app_net
     depends_on:
-      - mysql
       - mongo
       - redis
-      - broker
 
   nginx:
     image: nginx:stable
@@ -49,21 +47,6 @@ services:
     networks:
       - app_net
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql_container
-    restart: always
-    environment:
-      TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: appdb   # 可选：创建默认数据库
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./mysql/mysql_data:/var/lib/mysql
-    networks:
-      - app_net
-
   redis:
     image: redis:latest
     container_name: redis_container
@@ -75,37 +58,6 @@ services:
     environment:
       TZ: Asia/Shanghai
     command: ["redis-server", "--appendonly", "yes"]
-    networks:
-      - app_net
-
-  namesrv:
-    image: apache/rocketmq:5.1.4
-    container_name: rmqnamesrv
-    restart: always
-    ports:
-      - "9876:9876"
-    command: sh mqnamesrv
-    environment:
-      TZ: Asia/Shanghai
-    networks:
-      - app_net
-
-  broker:
-    image: apache/rocketmq:5.1.4
-    container_name: rmqbroker
-    restart: always
-    depends_on:
-      - namesrv
-    ports:
-      - "10911:10911"
-      - "10909:10909"
-    volumes:
-      - ./rocketmq/broker.conf:/opt/rocketmq/conf/broker.conf
-      # 可选持久化目录
-      - ./rocketmq/store:/opt/rocketmq/store
-    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
-    environment:
-      TZ: Asia/Shanghai
     networks:
       - app_net
 

@@ -13,7 +13,6 @@ import com.nyy.gmail.cloud.model.vo.task.SubTaskVO;
 import com.nyy.gmail.cloud.repository.mongo.GroupTaskRepository;
 import com.nyy.gmail.cloud.service.SubTaskService;
 import com.nyy.gmail.cloud.utils.DateUtil;
-import com.nyy.gmail.cloud.utils.TaskUtil;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -35,16 +34,12 @@ public class SubTaskController {
     private GroupTaskRepository groupTaskRepository;
 
     @Autowired
-    private TaskUtil taskUtil;
-
-    @Autowired
     private SubTaskService subTaskService;
 
     private static List<String> CAN_QUERY_TYPE = List.of(TaskTypesEnums.AccountImport.getCode(), TaskTypesEnums.ImageRecognition.getCode(), TaskTypesEnums.BatchSendEmailTestV2.getCode());
 
     @PostMapping("/stop")
     public Result stopTask(@RequestBody IdsListDTO data) {
-        taskUtil.stopGroupTask(data.getIds(), Session.currentSession().userID);
         return ResponseResult.success();
     }
 

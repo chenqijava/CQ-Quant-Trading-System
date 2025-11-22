@@ -1,6 +1,6 @@
 package com.nyy.gmail.cloud.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.nyy.gmail.cloud.common.MenuType;
 import com.nyy.gmail.cloud.common.Session;
 import com.nyy.gmail.cloud.common.annotation.Check2FA;

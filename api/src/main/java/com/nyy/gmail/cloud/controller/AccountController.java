@@ -2,7 +2,6 @@ package com.nyy.gmail.cloud.controller;
 
 
 import com.nyy.gmail.cloud.common.Session;
-import com.nyy.gmail.cloud.common.pagination.JpaPaginationHelper;
 import com.nyy.gmail.cloud.common.pagination.PageResult;
 import com.nyy.gmail.cloud.common.response.ResponseResult;
 import com.nyy.gmail.cloud.common.response.Result;
@@ -42,9 +41,6 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
-
-    @Resource
-    private JpaPaginationHelper jpaPaginationHelper;
 
     @Autowired
     private AccountGroupRepository accountGroupRepository;
@@ -251,20 +247,6 @@ public class AccountController {
             repeat += entities.size() - success;
         }
 
-        return ResponseResult.success();
-    }
-
-    @PostMapping("/saveWorkspaceAccount")
-    public Result saveWorkspaceAccount(@RequestBody WorkspaceAccountDto workspaceAccountDto) {
-        String userID = Session.currentSession().getUserID();
-        workspaceAccountDto.setUserID(userID);
-        accountService.saveWorkspace(workspaceAccountDto);
-        return ResponseResult.success();
-    }
-
-    @PostMapping("/saveYahooAccount")
-    public Result saveYahooAccount(@RequestBody ImportAccountReqDto reqDto) {
-        accountService.saveYahoo(reqDto);
         return ResponseResult.success();
     }
 }

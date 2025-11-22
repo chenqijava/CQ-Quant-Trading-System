@@ -2,7 +2,6 @@ package com.nyy.gmail.cloud.service;
 
 import com.nyy.gmail.cloud.common.Session;
 import com.nyy.gmail.cloud.common.exception.CommonException;
-import com.nyy.gmail.cloud.common.pagination.JpaPaginationHelper;
 import com.nyy.gmail.cloud.common.pagination.MongoPaginationHelper;
 import com.nyy.gmail.cloud.common.pagination.PageResult;
 import com.nyy.gmail.cloud.entity.mongo.*;
@@ -11,7 +10,6 @@ import com.nyy.gmail.cloud.model.dto.*;
 import com.nyy.gmail.cloud.common.response.ResultCode;
 import com.nyy.gmail.cloud.repository.mongo.*;
 import com.nyy.gmail.cloud.utils.FileUtils;
-import com.nyy.gmail.cloud.utils.TaskUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -46,12 +44,6 @@ public class AccountService {
 
     @Resource
     private RedissonClient redissonClient;
-
-    @Resource
-    private JpaPaginationHelper jpaPaginationHelper;
-
-    @Autowired
-    private TaskUtil taskUtil;
 
     @Resource
     private AccountGroupRepository accountGroupRepository;
@@ -184,15 +176,6 @@ public class AccountService {
         Path resPath = FileUtils.resPath;
         Path path = resPath.resolve(reqDto.getFilepath()).toAbsolutePath().normalize();
         int i = FileUtils.readCsvFileLineCount(path.toString());
-
-        taskUtil.createGroupTask(new ArrayList<>(), TaskTypesEnums.AccountImport, Map.of(
-                "openExportReceiveCode", reqDto.getOpenExportReceiveCode(),
-                "groupId", reqDto.getGroupId(),
-                "type", reqDto.getType(),
-                "filepath", reqDto.getFilepath(),
-                "publishTotalCount", (long) i,
-                "taskDesc", "导入账号",
-                "addMethod", "2"), userID);
     }
 
     public List<Account> findAllIncludePart(String userID, AccountListDTO accountListDTO) {
@@ -324,44 +307,5 @@ public class AccountService {
             account.setGroupID(workspaceAccountDto.getGroupId());
             accountRepository.save(account);
         }
-    }
-
-    public void saveYahoo(ImportAccountReqDto reqDto) {
-        String userID = Session.currentSession().getUserID();
-        if (StringUtils.isEmpty(reqDto.getFilepath())) {
-            throw new CommonException(ResultCode.PARAMS_IS_INVALID);
-        }
-        Path resPath = FileUtils.resPath;
-        Path path = resPath.resolve(reqDto.getFilepath()).toAbsolutePath().normalize();
-        List<String[]> lines = FileUtils.readCsv(path);
-        Integer count = 0;
-        List<String> addDatas = new ArrayList<>();
-        StringBuffer sb = new StringBuffer();
-        for (String[] line: lines) {
-            if (line[0].startsWith("– Email")) {
-                String email = line[0].substring(9);
-                if (!email.contains("@")) {
-                    email = email + "@yahoo.com";
-                }
-                sb = new StringBuffer(email).append("----").append(sb);
-            }
-            if (line[0].equals("----")) {
-                count++;
-                addDatas.add(sb.toString());
-                sb = new StringBuffer();
-            } else {
-                sb.append(line[0]).append("\n");
-            }
-        }
-        addDatas.add(sb.toString());
-        taskUtil.createGroupTask(new ArrayList<>(), TaskTypesEnums.AccountImport, Map.of(
-                "openExportReceiveCode", reqDto.getOpenExportReceiveCode(),
-                "groupId", reqDto.getGroupId(),
-                "type", reqDto.getType(),
-                "addDatas", addDatas,
-                "publishTotalCount", (long) count,
-                "taskDesc", "导入账号",
-                "addMethod", "1"), userID);
-
     }
 }

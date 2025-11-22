@@ -1,7 +1,6 @@
 package com.nyy.gmail.cloud.service;
 
 import com.nyy.gmail.cloud.common.exception.CommonException;
-import com.nyy.gmail.cloud.common.pagination.JpaPaginationHelper;
 import com.nyy.gmail.cloud.common.pagination.MongoPaginationHelper;
 import com.nyy.gmail.cloud.common.pagination.PageResult;
 import com.nyy.gmail.cloud.entity.mongo.Account;
@@ -51,9 +50,6 @@ public class AccountGroupService {
 
     @Resource
     private RedissonClient redissonClient;
-
-    @Resource
-    private JpaPaginationHelper jpaPaginationHelper;
 
     public AccountGroupSaveDTO save(AccountGroup accountGroup, String userID, AccountGroupTypeEnums accountGroupTypeEnums) {
         // 校验参数
