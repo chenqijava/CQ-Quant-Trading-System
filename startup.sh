@@ -3,6 +3,6 @@ git pull
 cd api
 bash ./build.sh
 
-docker rm -f api-main
+docker-compose down
 docker-compose up -d
 
