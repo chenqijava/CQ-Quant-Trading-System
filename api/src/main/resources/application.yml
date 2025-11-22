@@ -5,6 +5,14 @@ application:
 spring:
   profiles:
     active: local
+  application:
+    name: api
+  data:
+    redis:
+      host: ${application.middleware.host}
+      port: 6379
+      database: 0
+
   session:
     store-type: redis
     timeout: 30d # 30d

@@ -2,6 +2,9 @@ spring:
   profiles:
     activate:
       on-profile: docker
+  data:
+    redis:
+      host: redis
 
 admin:
   password: 'qwertyuiopkjhgf'
