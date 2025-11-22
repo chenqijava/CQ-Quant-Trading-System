@@ -61,10 +61,10 @@ public class MongoDataInit {
                 }}).setChildList(
                         Arrays.asList(
                                 new MenuTree().setKey(MenuType.socks5),
-                                new MenuTree().setKey(MenuType.proxyAccount),
+//                                new MenuTree().setKey(MenuType.proxyAccount),
                                 new MenuTree().setKey(MenuType.adminRole),
                                 new MenuTree().setKey(MenuType.adminUser),
-                                new MenuTree().setKey(MenuType.apiKey),
+//                                new MenuTree().setKey(MenuType.apiKey),
                                 new MenuTree().setKey(MenuType.globalParams)
                         ))
         ), null);
